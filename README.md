@@ -48,6 +48,9 @@ working directory, with the client fetching `./Cargo.toml`. By default, the
 server generates a self-signed certificate and stores it to disk, where the
 client will automatically find and trust it.
 
+(Note: when providing the example server with a specific address to listen on,
+make sure you match the correct IPv4 vs IPv6 address in the client command.)
+
 **Links**
 
 - Talk at [RustFest Paris (May 2018) presentation][talk]; [slides][slides]; [YouTube][youtube]
