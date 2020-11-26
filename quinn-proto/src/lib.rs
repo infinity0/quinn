@@ -19,6 +19,7 @@
 #![allow(clippy::too_many_arguments)]
 
 use std::{convert::TryInto, fmt, net::SocketAddr, ops, time::Duration};
+use serde::{Serialize, Deserialize};
 
 mod cid_queue;
 #[doc(hidden)]
@@ -247,7 +248,7 @@ impl coding::Codec for StreamId {
 }
 
 /// An outgoing packet
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Transmit {
     /// The socket this datagram should be sent to
     pub destination: SocketAddr,

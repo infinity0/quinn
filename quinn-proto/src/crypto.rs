@@ -11,6 +11,7 @@
 use std::str;
 
 use bytes::BytesMut;
+use serde::{Serialize, Deserialize};
 
 use crate::{
     config::ConfigError, shared::ConnectionId, transport_parameters::TransportParameters,
@@ -117,6 +118,7 @@ pub trait Session: Send + Sized {
 }
 
 /// A pair of keys for bidirectional communication
+#[derive(Serialize, Deserialize)]
 pub struct KeyPair<T> {
     /// Key for encrypting data
     pub local: T,

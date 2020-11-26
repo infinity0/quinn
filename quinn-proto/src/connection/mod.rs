@@ -9,6 +9,7 @@ use std::{
 
 use bytes::{Bytes, BytesMut};
 use rand::{rngs::StdRng, Rng, SeedableRng};
+use serde::{Serialize, Deserialize};
 use thiserror::Error;
 use tracing::{debug, error, trace, trace_span, warn};
 
@@ -58,6 +59,7 @@ use timer::{Timer, TimerTable};
 /// `Event`s to make progress. To handle timeouts, a `Connection` returns timer updates and
 /// expects timeouts through various methods. A number of simple getter methods are exposed
 /// to allow callers to inspect some of the connection state.
+#[derive(Serialize, Deserialize)]
 pub struct Connection<S>
 where
     S: crypto::Session,
@@ -3168,6 +3170,7 @@ mod state {
 /// Ensures we can always fit all our ACKs in a single minimum-MTU packet with room to spare
 const MAX_ACK_BLOCKS: usize = 64;
 
+#[derive(Serialize, Deserialize)]
 struct PrevCrypto<K>
 where
     K: crypto::PacketKey,

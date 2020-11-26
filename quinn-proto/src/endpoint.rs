@@ -10,6 +10,7 @@ use std::{
 
 use bytes::{BufMut, Bytes, BytesMut};
 use rand::{rngs::StdRng, Rng, RngCore, SeedableRng};
+use serde::{Serialize, Deserialize};
 use slab::Slab;
 use thiserror::Error;
 use tracing::{debug, trace, warn};
@@ -39,6 +40,7 @@ use crate::{
 /// This object performs no I/O whatsoever. Instead, it generates a stream of packets to send via
 /// `poll_transmit`, and consumes incoming packets and connection-generated events via `handle` and
 /// `handle_event`.
+#[derive(Serialize, Deserialize)]
 pub struct Endpoint<S>
 where
     S: crypto::Session,
@@ -740,7 +742,7 @@ where
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub(crate) struct ConnectionMeta {
     init_cid: ConnectionId,
     /// Number of local connection IDs that have been issued in NEW_CONNECTION_ID frames.
@@ -757,7 +759,7 @@ pub(crate) struct ConnectionMeta {
 }
 
 /// Internal identifier for a `Connection` currently associated with an endpoint
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash, Ord, PartialOrd)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash, Ord, PartialOrd, Serialize, Deserialize)]
 pub struct ConnectionHandle(pub usize);
 
 impl From<ConnectionHandle> for usize {
@@ -824,7 +826,7 @@ pub enum ConnectError {
     Config(#[source] ConfigError),
 }
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Serialize, Deserialize)]
 struct ResetTokenTable(HashMap<SocketAddr, HashMap<ResetToken, ConnectionHandle>>);
 
 impl ResetTokenTable {

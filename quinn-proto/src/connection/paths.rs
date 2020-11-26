@@ -1,9 +1,12 @@
 use std::{cmp, net::SocketAddr, time::Duration, time::Instant};
 
+use serde::{Serialize, Deserialize};
+
 use super::pacing::Pacer;
 use crate::{congestion, TIMER_GRANULARITY};
 
 /// Description of a particular network path
+#[derive(Serialize, Deserialize)]
 pub struct PathData {
     pub remote: SocketAddr,
     pub rtt: RttEstimator,
@@ -49,7 +52,7 @@ impl PathData {
     }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Serialize, Deserialize)]
 pub struct RttEstimator {
     /// The most recent RTT measurement made when receiving an ack for a previously unacked packet
     latest: Duration,

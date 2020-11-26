@@ -2,11 +2,14 @@
 
 use std::time::{Duration, Instant};
 
+use serde::{Serialize, Deserialize};
+
 use tracing::warn;
 
 /// A simple token-bucket pacer. The bucket starts full and has an adjustable capacity. Once the
 /// bucket is empty, further transmission is blocked. The bucket refills at a rate slightly faster
 /// than one congestion window per RTT.
+#[derive(Serialize, Deserialize)]
 pub struct Pacer {
     capacity: u64,
     tokens: u64,

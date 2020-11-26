@@ -1,6 +1,7 @@
 use std::{convert::TryInto, fmt, num::TryFromIntError, sync::Arc, time::Duration};
 
 use rand::RngCore;
+use serde::{Serialize, Deserialize};
 use thiserror::Error;
 
 #[cfg(feature = "rustls")]
@@ -26,6 +27,7 @@ use crate::{
 /// performance at lower bandwidths and latencies. The default configuration is tuned for a 100Mbps
 /// link with a 100ms round trip time, with remote endpoints opening at most 320 new streams per
 /// second.
+#[derive(Serialize, Deserialize)]
 pub struct TransportConfig {
     pub(crate) stream_window_bidi: VarInt,
     pub(crate) stream_window_uni: VarInt,

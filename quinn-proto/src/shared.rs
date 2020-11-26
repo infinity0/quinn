@@ -1,6 +1,7 @@
 use std::{fmt, net::SocketAddr, time::Instant};
 
 use bytes::{Buf, BufMut, BytesMut};
+use serde::{Serialize, Deserialize};
 
 use crate::{coding::BufExt, packet::PartialDecode, ResetToken, MAX_CID_SIZE};
 
@@ -43,7 +44,7 @@ impl EndpointEvent {
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub(crate) enum EndpointEventInner {
     /// The connection has been drained
     Drained,
@@ -59,7 +60,7 @@ pub(crate) enum EndpointEventInner {
 /// Protocol-level identifier for a connection.
 ///
 /// Mainly useful for identifying this connection's packets on the wire with tools like Wireshark.
-#[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub struct ConnectionId {
     /// length of CID
     len: u8,
@@ -127,7 +128,7 @@ impl fmt::Display for ConnectionId {
 
 /// Explicit congestion notification codepoint
 #[repr(u8)]
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub enum EcnCodepoint {
     #[doc(hidden)]
     ECT0 = 0b10,

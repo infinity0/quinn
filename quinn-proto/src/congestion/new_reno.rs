@@ -1,10 +1,11 @@
 use std::sync::Arc;
 use std::time::Instant;
+use serde::{Serialize, Deserialize};
 
 use super::{Controller, ControllerFactory};
 
 /// A simple, standard congestion controller
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NewReno {
     config: Arc<NewRenoConfig>,
     /// Maximum number of bytes in flight that may be sent.
@@ -72,7 +73,7 @@ impl Controller for NewReno {
 }
 
 /// Configuration for the `NewReno` congestion controller
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NewRenoConfig {
     max_datagram_size: u64,
     initial_window: u64,

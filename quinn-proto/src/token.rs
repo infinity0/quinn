@@ -5,6 +5,7 @@ use std::{
 };
 
 use bytes::BufMut;
+use serde::{Serialize, Deserialize};
 
 use crate::{
     coding::{BufExt, BufMutExt},
@@ -13,6 +14,7 @@ use crate::{
     RESET_TOKEN_SIZE,
 };
 
+#[derive(Serialize, Deserialize)]
 pub struct RetryToken<'a> {
     /// The destination connection ID set in the very first packet from the client
     pub orig_dst_cid: ConnectionId,
@@ -107,7 +109,7 @@ impl<'a> RetryToken<'a> {
 ///
 /// Used for an endpoint to securely communicate that it has lost state for a connection.
 #[allow(clippy::derive_hash_xor_eq)] // Custom PartialEq impl matches derived semantics
-#[derive(Debug, Copy, Clone, Hash)]
+#[derive(Debug, Copy, Clone, Hash, Serialize, Deserialize)]
 pub struct ResetToken([u8; RESET_TOKEN_SIZE]);
 
 impl ResetToken {
