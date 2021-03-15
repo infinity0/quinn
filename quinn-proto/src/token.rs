@@ -95,7 +95,7 @@ impl<'a> RetryToken<'a> {
         cursor.write(address.port());
         retry_src_cid.encode_long(&mut cursor);
 
-        let size = Self::MAX_ADDITIONAL_DATA_SIZE - cursor.len();
+        let size = cursor.len();
         &additional_data[..size]
     }
 
